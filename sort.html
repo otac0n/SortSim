@@ -58,10 +58,16 @@
     <script src="sorts\ShellSort.js"></script>
     <script src="sorts\StoogeSort.js"></script>
     <script type="text/javascript">
-        var arr = SortArray.create(30, function (i) { return Math.random() * 100 | 0; });
-        StoogeSort(arr);
+        var subject = [];
+        subject.length = 30;
+        for (var i = 0; i < subject.length; i++) {
+            subject[i] = Math.random() * 100 | 0;
+        }
 
-        speed = 10;
+        speed = 20;
+        stop = false;
+
+        QuickSort(SortArray.create(subject));
         RenderSimple(operations);
     </script>
 </body>

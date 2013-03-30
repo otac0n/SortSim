@@ -77,15 +77,12 @@ SortArray = (function () {
         return new ArrayPointer(name, value instanceof ArrayPointer ? value.value : (value || 0), this);
     }
 
-    SortArray.create = function (length, fill) {
-        var array = [];
-        array.length = length;
-
-        for (var i = length - 1; i >= 0; i--) {
-            array[i] = fill(i);
+    SortArray.create = function (lengthOrArray) {
+        if (lengthOrArray instanceof Array) {
+            return new SortArray(lengthOrArray.length, lengthOrArray);
+        } else {
+            return new SortArray(lengthOrArray | 0);
         }
-
-        return new SortArray(array.length, array);
     }
 
     SortArray.compare = function (a, i, b, j) {
