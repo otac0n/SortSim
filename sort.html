@@ -47,6 +47,7 @@
     <script src="sort-sim.js"></script>
     <script src="renderers\Simple.js"></script>
     <script src="sorts\BubbleSort.js"></script>
+    <script src="sorts\CocktailSort.js"></script>
     <script src="sorts\CombSort.js"></script>
     <script src="sorts\GnomeSort.js"></script>
     <script src="sorts\HeapSort.js"></script>
@@ -57,7 +58,7 @@
     <script src="sorts\ShellSort.js"></script>
     <script type="text/javascript">
         var arr = SortArray.create(30, function (i) { return Math.random() * 100 | 0; });
-        HeapSort(arr);
+        FastCocktailSort(arr);
 
         speed = 10;
         RenderSimple(operations);
