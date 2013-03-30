@@ -3,42 +3,7 @@
     <title>Sort</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="jquery.animate-colors.js"></script>
-    <style type="text/css">
-        div.array {
-            border: 1px solid black;
-            box-sizing: border-box;
-            float: left;
-            height: 32px;
-            clear: both;
-            margin: 10px;
-        }
-
-        div.element {
-            border: 1px solid black;
-            box-sizing: border-box;
-            display: inline-block;
-            height: 30px;
-            width: 30px;
-            text-align: center;
-            line-height: 30px;
-            position: relative;
-        }
-
-        i.pointer {
-            display: none;
-        }
-
-        div.element i.pointer {
-            display: block;
-            background-color: #eee;
-            position: absolute;
-            padding: 3px;
-            right: 0;
-            bottom: -20px;
-            font-size: 14px;
-            line-height: 16px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="renderers\Simple.css">
 </head>
 <body>
     <div id="field">
@@ -58,17 +23,19 @@
     <script src="sorts\ShellSort.js"></script>
     <script src="sorts\StoogeSort.js"></script>
     <script type="text/javascript">
+        var sync = {
+            speed: 20,
+            stop: false
+        };
+
         var subject = [];
         subject.length = 30;
         for (var i = 0; i < subject.length; i++) {
             subject[i] = Math.random() * 100 | 0;
         }
 
-        speed = 20;
-        stop = false;
-
         OptimizedCocktailSort(SortArray.create(subject));
-        RenderSimple(operations);
+        RenderSimple(operations, sync, $('#field'));
     </script>
 </body>
 </html>

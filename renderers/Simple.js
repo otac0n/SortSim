@@ -1,10 +1,9 @@
-var speed;
-var stop = false;
-function RenderSimple(operations) {
+function RenderSimple(operations, sync, target) {
     var frame = 0;
+    $parent = $('<div class="simple" />').appendTo(target);
 
     var renderOperation = function () {
-        if (stop || frame >= operations.length) {
+        if (sync.stop || frame >= operations.length) {
             return false;
         }
 
@@ -20,7 +19,7 @@ function RenderSimple(operations) {
 
         switch (op.op) {
             case "array.create":
-                div = $('<div class="array" />').attr('id', 'array' + op.id).appendTo('#field')[0];
+                div = $('<div class="array" />').attr('id', 'array' + op.id).appendTo($parent)[0];
                 for (var i = 0; i < op.length; i++) {
                     $element = $('<div class="element" />').append($('<span class="value" />')).appendTo(div);
                     $element.find('.value').text(op.value ? op.value[i] : "\xB7");
@@ -34,14 +33,14 @@ function RenderSimple(operations) {
                 break;
             case "array.compare":
                 $("#array" + op.idA).find('.element').eq(op.indexA).css({ backgroundColor: '#fff' })
-                    .animate({ backgroundColor: '#ff0' }, 400/speed, function () {
-                        $(this).animate({ backgroundColor: '#fff' }, 400/speed, function () {
+                    .animate({ backgroundColor: '#ff0' }, 400/sync.speed, function () {
+                        $(this).animate({ backgroundColor: '#fff' }, 400/sync.speed, function () {
                             animationFinish();
                         });
                     });
                 $("#array" + op.idB).find('.element').eq(op.indexB).css({ backgroundColor: '#fff' })
-                    .animate({ backgroundColor: '#ff0' }, 400/speed, function () {
-                        $(this).animate({ backgroundColor: '#fff' }, 400/speed, function () {
+                    .animate({ backgroundColor: '#ff0' }, 400/sync.speed, function () {
+                        $(this).animate({ backgroundColor: '#fff' }, 400/sync.speed, function () {
                             animationFinish();
                         });
                     });
@@ -55,16 +54,16 @@ function RenderSimple(operations) {
 
                 if (false) {
                     $a.css({ color: '#000' })
-                        .animate({ color: '#fff' }, 400/speed, function () {
+                        .animate({ color: '#fff' }, 400/sync.speed, function () {
                             $a.text(a);
-                            $(this).animate({ color: '#000' }, 400/speed, function () {
+                            $(this).animate({ color: '#000' }, 400/sync.speed, function () {
                                 animationFinish();
                             });
                         });
                     $b.css({ color: '#000' })
-                        .animate({ color: '#fff' }, 400/speed, function () {
+                        .animate({ color: '#fff' }, 400/sync.speed, function () {
                             $b.text(b);
-                            $(this).animate({ color: '#000' }, 400/speed, function () {
+                            $(this).animate({ color: '#000' }, 400/sync.speed, function () {
                                 animationFinish();
                             });
                         });
