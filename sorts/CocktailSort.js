@@ -57,24 +57,24 @@ function OptimizedCocktailSort(values) {
     var start = values.pointer("start", 0);
     var swapped;
     do {
-        swapped = 0;
+        swapped = false;
         for (i.set(start.value); i.value <= right.value; i.add(1)) {
             if (values.compare(i, i.value + 1) > 0) {
                 values.swap(i, i.value + 1);
                 start.set(i.value - 1);
-                swapped++;
+                swapped = true;
             }
         }
         right.sub(1);
-        if (swapped == 0) {
-            break;
-        }
-        swapped--;
+
+        if (swapped == false) break;
+
+        swapped = false;
         for (i.set(start.value); i.value >= left.value; i.sub(1)) {
             if (values.compare(i, i.value + 1) > 0) {
                 values.swap(i, i.value + 1);
                 start.set(i.value + 1);
-                swapped++;
+                swapped = true;
             }
         }
         left.add(1);
