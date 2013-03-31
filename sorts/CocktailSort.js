@@ -24,10 +24,10 @@ function CocktailSort(values) {
 function FastCocktailSort(values) {
     var i = values.pointer("i", 0);
     var left = values.pointer("left", 0);
-    var right = values.pointer("right", values.length - 1);
+    var right = values.pointer("right", values.length - 2);
     do {
         var swapped = false;
-        for (i.set(left); i.value <= right.value - 1; i.add(1)) {
+        for (i.set(left); i.value <= right.value; i.add(1)) {
             if (values.compare(i, i.value + 1) > 0) {
                 values.swap(i, i.value + 1);
                 swapped = true;
@@ -37,7 +37,7 @@ function FastCocktailSort(values) {
         if (!swapped) {
             break;
         }
-        for (i.set(right.value - 1); i.value >= left.value; i.sub(1)) {
+        for (i.set(right.value); i.value >= left.value; i.sub(1)) {
             if (values.compare(i, i.value + 1) > 0) {
                 values.swap(i, i.value + 1);
                 swapped = true;
