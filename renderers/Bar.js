@@ -3,7 +3,7 @@ function RenderBar(operations, sync, target) {
     $parent = $('<div class="bar" />').appendTo(target);
 
     function getHeight(value) {
-        return (+value + 1) * 5 + 'px';
+        return (+value + 1) * 2 + 'px';
     }
 
     var renderOperation = function () {
