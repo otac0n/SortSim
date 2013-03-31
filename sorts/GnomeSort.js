@@ -15,7 +15,7 @@ function GnomeSort(values) {
 
 function FastGnomeSort(values) {
     var i = values.pointer("i", 1);
-    var last = values.pointer("l", 0);
+    var last = values.pointer("last", 0);
     while (i.value < values.length) {
         if (values.compare(i, i.value - 1) >= 0) {
             if (last.value != 0) {
@@ -36,4 +36,5 @@ function FastGnomeSort(values) {
         }
     }
     i.destroy();
+    last.destroy();
 }
