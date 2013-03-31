@@ -17,3 +17,7 @@ function ShellSort(values) {
     i.destroy();
     j.destroy();
 }
+
+if (SortAlgorithms) {
+    SortAlgorithms["ShellSort"] = { name: "Shell sort", sort: ShellSort };
+}

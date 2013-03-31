@@ -30,3 +30,8 @@ function FastBubbleSort(values) {
     i.destroy();
     n.destroy();
 }
+
+if (SortAlgorithms) {
+    SortAlgorithms["BubbleSort"] = { name: "Bubble sort", sort: BubbleSort };
+    SortAlgorithms["FastBubbleSort"] = { name: "Bubble sort (fast)", sort: FastBubbleSort };
+}

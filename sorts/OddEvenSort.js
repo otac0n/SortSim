@@ -18,3 +18,7 @@ function OddEvenSort(values) {
     }
     i.destroy();
 }
+
+if (SortAlgorithms) {
+    SortAlgorithms["OddEvenSort"] = { name: "Odd-even sort", sort: OddEvenSort };
+}

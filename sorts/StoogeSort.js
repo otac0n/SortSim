@@ -17,3 +17,7 @@ function StoogeSort(values) {
 
     stoogesort(values, 0, values.length - 1);
 }
+
+if (SortAlgorithms) {
+    SortAlgorithms["StoogeSort"] = { name: "Stooge sort", sort: StoogeSort };
+}

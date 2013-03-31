@@ -20,3 +20,7 @@ function CombSort(values) {
     }
     i.destroy();
 }
+
+if (SortAlgorithms) {
+    SortAlgorithms["CombSort"] = { name: "Comb sort", sort: CombSort };
+}

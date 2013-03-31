@@ -7,6 +7,8 @@
     <link rel="stylesheet" type="text/css" href="renderers\Bar.css">
 </head>
 <body>
+    <select id="algorithms"></select>
+    <button id="go" type="button">Go</button>
     <div id="field">
     </div>
 
@@ -36,8 +38,23 @@
             subject[i] = Math.random() * 100 | 0;
         }
 
-        MergeSort(SortArray.create(subject));
-        RenderBar(operations, sync, $('#field'));
+        $(function () {
+            for (var alg in SortAlgorithms) {
+                $('<option />').attr('value', alg).text(SortAlgorithms[alg].name).appendTo('#algorithms');
+            }
+
+            $('#go').click(function () {
+                var alg = $('#algorithms').val();
+                var sort = SortAlgorithms[alg].sort;
+
+                operations = [];
+                sort(SortArray.create(subject));
+                var result = operations;
+
+                $('#field').html('');
+                RenderBar(result, sync, $('#field'));
+            });
+        });
     </script>
 </body>
 </html>

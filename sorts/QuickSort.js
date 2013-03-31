@@ -40,3 +40,7 @@ function QuickSort(values) {
 
     quickSort(values, 0, values.length - 1);
 }
+
+if (SortAlgorithms) {
+    SortAlgorithms["QuickSort"] = { name: "Quicksort", sort: QuickSort };
+}

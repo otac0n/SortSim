@@ -38,3 +38,8 @@ function FastGnomeSort(values) {
     i.destroy();
     last.destroy();
 }
+
+if (SortAlgorithms) {
+    SortAlgorithms["GnomeSort"] = { name: "Gnome sort", sort: GnomeSort };
+    SortAlgorithms["FastGnomeSort"] = { name: "Gnome sort (fast)", sort: FastGnomeSort };
+}

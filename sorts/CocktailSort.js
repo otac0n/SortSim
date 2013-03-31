@@ -84,3 +84,9 @@ function OptimizedCocktailSort(values) {
     right.destroy();
     i.destroy();
 }
+
+if (SortAlgorithms) {
+    SortAlgorithms["CocktailSort"] = { name: "Cocktail sort", sort: BubbleSort };
+    SortAlgorithms["FastCocktailSort"] = { name: "Cocktail sort (fast)", sort: FastCocktailSort };
+    SortAlgorithms["OptimizedCocktailSort"] = { name: "Cocktail sort (optimized)", sort: OptimizedCocktailSort };
+}

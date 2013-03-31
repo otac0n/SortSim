@@ -54,3 +54,7 @@ function MergeSort(values) {
 
     sort(values);
 }
+
+if (SortAlgorithms) {
+    SortAlgorithms["MergeSort"] = { name: "Merge sort", sort: MergeSort };
+}

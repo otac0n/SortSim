@@ -19,3 +19,7 @@ function SelectionSort(values) {
     j.destroy();
     iMin.destroy();
 }
+
+if (SortAlgorithms) {
+    SortAlgorithms["SelectionSort"] = { name: "Selection sort", sort: SelectionSort };
+}

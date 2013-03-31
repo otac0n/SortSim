@@ -43,3 +43,7 @@ function HeapSort(values) {
     }
     end.destroy();
 }
+
+if (SortAlgorithms) {
+    SortAlgorithms["HeapSort"] = { name: "Heapsort", sort: HeapSort };
+}

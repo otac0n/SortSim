@@ -1,5 +1,7 @@
 var operations = [];
 
+var SortAlgorithms = {};
+
 ArrayPointer = (function () {
     function ArrayPointer(name, value, array) {
         this.id = operations.length;
