@@ -38,8 +38,8 @@ function MergeSort(values) {
         }
 
         var middle = m.pointer("m", m.length / 2 | 0);
-        var left = SortArray.create(middle.value, function (i) { return m.get(i); });
-        var right = SortArray.create(m.length - middle.value, function (i) { return m.get(i + middle.value); })
+        var left = SortArray.create(m.storage.slice(0, middle.value));
+        var right = SortArray.create(m.storage.slice(middle.value))
         middle.destroy();
 
         left = sort(left);
