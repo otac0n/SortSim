@@ -4,6 +4,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="jquery.animate-colors.js"></script>
     <link rel="stylesheet" type="text/css" href="renderers\Simple.css">
+    <link rel="stylesheet" type="text/css" href="renderers\Bar.css">
 </head>
 <body>
     <div id="field">
@@ -11,6 +12,7 @@
 
     <script src="sort-sim.js"></script>
     <script src="renderers\Simple.js"></script>
+    <script src="renderers\Bar.js"></script>
     <script src="sorts\BubbleSort.js"></script>
     <script src="sorts\CocktailSort.js"></script>
     <script src="sorts\CombSort.js"></script>
@@ -34,8 +36,8 @@
             subject[i] = Math.random() * 100 | 0;
         }
 
-        OptimizedCocktailSort(SortArray.create(subject));
-        RenderSimple(operations, sync, $('#field'));
+        MergeSort(SortArray.create(subject));
+        RenderBar(operations, sync, $('#field'));
     </script>
 </body>
 </html>

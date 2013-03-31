@@ -1,0 +1,24 @@
+.bar div.array {
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.bar div.element {
+    border: 1px solid black;
+    display: inline-block;
+    width: 10px;
+    margin-right: 1px;
+    position: relative;
+}
+
+.bar i.pointer {
+    display: none;
+}
+
+.bar div.element i.pointer {
+    display: inline-block;
+    position: absolute;
+    bottom: -30px;
+    background-color: #eee;
+    padding: 3px;
+}
