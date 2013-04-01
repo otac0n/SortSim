@@ -3,12 +3,10 @@ function QuickSort(values) {
         left = array.pointer("left", left);
         right = array.pointer("right", right);
 
-        var pivotArray = new SortArray(1);
-        pivotArray.set(0, array.get(pivotIndex));
         array.swap(pivotIndex, right);
         var storeIndex = array.pointer("s", left);
         for (var i = array.pointer("i", left); i.value < right.value; i.add(1)) {
-            if (SortArray.compare(array, i, pivotArray, 0) < 0) {
+            if (array.compare(i, right) < 0) {
                 array.swap(i, storeIndex);
                 storeIndex.add(1);
             }
@@ -16,7 +14,6 @@ function QuickSort(values) {
         array.swap(storeIndex, right);
 
         i.destroy();
-        pivotArray.destroy();
         right.destroy();
         left.destroy();
 
