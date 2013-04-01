@@ -37,13 +37,53 @@
             stop: false
         };
 
-        var subject = [];
-        subject.length = 100;
-        for (var i = 0; i < subject.length; i++) {
-            subject[i] = Math.random() * 100 | 0;
-                        //101 - i;
-                        //i;
-        }
+        var Subjects = { };
+
+        Subjects["Random"] = function (len) {
+            var subject = [];
+            subject.length = len;
+            for (var i = 0; i < len; i++) {
+                subject[i] = i + 1;
+            }
+            for (var a = len - 1; a >= 1; a--) {
+                var b = Math.random() * a | 0;
+
+                var temp = subject[a];
+                subject[a] = subject[b];
+                subject[b] = temp;
+            }
+            return subject;
+        };
+
+        Subjects["Reverse"] = function (len) {
+            var subject = [];
+            subject.length = len;
+            for (var i = 0; i < len; i++) {
+                subject[i] = len - i;
+            }
+            return subject;
+        };
+
+        Subjects["Almost"] = function (len) {
+            var subject = [];
+            subject.length = len;
+            for (var i = 0; i < len; i++) {
+                subject[i] = i + 1;
+            }
+
+            for (var i = 0; i < len * 2; i++) {
+                var a = Math.random() * len | 0;
+                var b = Math.random() * 3 | 0 - 1 + a;
+
+                if (b >= len || b < 0) continue;
+
+                var temp = subject[a];
+                subject[a] = subject[b];
+                subject[b] = temp;
+            }
+
+            return subject;
+        };
 
         $(function () {
             for (var alg in SortAlgorithms) {
@@ -52,6 +92,8 @@
             }
 
             $('#go').click(function () {
+                var subject = Subjects["Random"](100);
+
                 var alg1 = $('#algorithms1').val();
                 var alg2 = $('#algorithms2').val();
 
