@@ -7,9 +7,13 @@
     <link rel="stylesheet" type="text/css" href="renderers\Bar.css">
 </head>
 <body>
-    <select id="algorithms"></select>
+    <select id="algorithms1"></select>
+    vs
+    <select id="algorithms2"></select>
     <button id="go" type="button">Go</button>
-    <div id="field">
+    <div id="field1">
+    </div>
+    <div id="field2">
     </div>
 
     <script src="sort-sim.js"></script>
@@ -33,26 +37,39 @@
         };
 
         var subject = [];
-        subject.length = 30;
+        subject.length = 100;
         for (var i = 0; i < subject.length; i++) {
             subject[i] = Math.random() * 100 | 0;
+                        //101 - i;
+                        //i;
         }
 
         $(function () {
             for (var alg in SortAlgorithms) {
-                $('<option />').attr('value', alg).text(SortAlgorithms[alg].name).appendTo('#algorithms');
+                $('<option />').attr('value', alg).text(SortAlgorithms[alg].name).appendTo('#algorithms1');
+                $('<option />').attr('value', alg).text(SortAlgorithms[alg].name).appendTo('#algorithms2');
             }
 
             $('#go').click(function () {
-                var alg = $('#algorithms').val();
-                var sort = SortAlgorithms[alg].sort;
+                var alg1 = $('#algorithms1').val();
+                var alg2 = $('#algorithms2').val();
+
+                var sort1 = SortAlgorithms[alg1].sort;
+                var sort2 = SortAlgorithms[alg2].sort;
 
                 operations = [];
-                sort(SortArray.create(subject));
-                var result = operations;
+                sort1(SortArray.create(subject));
+                var result1 = operations;
 
-                $('#field').html('');
-                RenderBar(result, sync, $('#field'));
+                $('#field1').html('');
+                RenderBar(result1, sync, $('#field1'));
+
+                operations = [];
+                sort2(SortArray.create(subject));
+                var result2 = operations;
+
+                $('#field2').html('');
+                RenderBar(result2, sync, $('#field2'));
             });
         });
     </script>
