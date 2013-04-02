@@ -55,6 +55,61 @@ function MergeSort(values) {
     sort(values);
 }
 
+function BottomUpMergeSort(values) {
+    var arrayA = values;
+    var arrayB = SortArray.create(values.length);
+    debugger;
+
+    for (var mergeSize = 2; mergeSize / 2 <= values.length; mergeSize *= 2) {
+        var l = arrayA.pointer('left');
+        var r = arrayA.pointer('right');
+        var i = arrayA.pointer('i');
+        var j = arrayB.pointer('j');
+        for (i.set(0); i.value < arrayA.length; i.add(mergeSize)) {
+            l.set(i);
+            r.set(i.value + mergeSize / 2);
+            var lEnd = false;
+            var rEnd = r.value >= arrayA.length;
+            for (j.set(i); j.value < i.value + mergeSize; j.add(1)) {
+                if (!lEnd && !rEnd) {
+                    if (arrayA.compare(l, r) <= 0) {
+                        arrayB.set(j, arrayA.get(l));
+                        l.add(1);
+                        lEnd = l.value > i.value + mergeSize / 2 - 1;
+                    } else {
+                        arrayB.set(j, arrayA.get(r));
+                        r.add(1);
+                        rEnd = r.value > i.value + mergeSize - 1 || r.value >= arrayA.length;
+                    }
+                } else if (lEnd) {
+                    arrayB.set(j, arrayA.get(r));
+                    r.add(1);
+                } else {
+                    arrayB.set(j, arrayA.get(l));
+                    l.add(1);
+                }
+            }
+        }
+        j.destroy();
+        i.destroy();
+        r.destroy();
+        l.destroy();
+        var swap = arrayA;
+        arrayA = arrayB;
+        arrayB = swap;
+    }
+
+    if (arrayA == values) {
+        arrayB.destroy();
+    } else {
+        for (var i = 0; i < values.length; i++) {
+            values.set(i, arrayA.get(i));
+        };
+        arrayA.destroy();
+    }
+}
+
 if (SortAlgorithms) {
     SortAlgorithms["MergeSort"] = { name: "Merge sort", sort: MergeSort };
+    SortAlgorithms["BottomUpMergeSort"] = { name: "Merge sort (bottom-up)", sort: BottomUpMergeSort };
 }
