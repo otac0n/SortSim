@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="renderers\Bar.css">
 </head>
 <body>
+    <select id="subjects"></select><br />
     <select id="algorithms1"></select>
     vs
     <select id="algorithms2"></select>
@@ -55,7 +56,7 @@
             return subject;
         };
 
-        Subjects["Reverse"] = function (len) {
+        Subjects["Reversed"] = function (len) {
             var subject = [];
             subject.length = len;
             for (var i = 0; i < len; i++) {
@@ -64,7 +65,7 @@
             return subject;
         };
 
-        Subjects["Almost"] = function (len) {
+        Subjects["Nearly sorted"] = function (len) {
             var subject = [];
             subject.length = len;
             for (var i = 0; i < len; i++) {
@@ -91,8 +92,12 @@
                 $('<option />').attr('value', alg).text(SortAlgorithms[alg].name).appendTo('#algorithms2');
             }
 
+            for (var sub in Subjects) {
+                $('<option />').attr('value', sub).text(sub).appendTo('#subjects');
+            }
+
             $('#go').click(function () {
-                var subject = Subjects["Random"](100);
+                var subject = Subjects[$('#subjects').val()](100);
 
                 var alg1 = $('#algorithms1').val();
                 var alg2 = $('#algorithms2').val();
