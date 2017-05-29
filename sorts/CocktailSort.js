@@ -86,7 +86,7 @@ function OptimizedCocktailSort(values) {
 }
 
 if (SortAlgorithms) {
-    SortAlgorithms["CocktailSort"] = { name: "Cocktail sort", sort: BubbleSort };
+    SortAlgorithms["CocktailSort"] = { name: "Cocktail sort", sort: CocktailSort };
     SortAlgorithms["FastCocktailSort"] = { name: "Cocktail sort (fast)", sort: FastCocktailSort };
     SortAlgorithms["OptimizedCocktailSort"] = { name: "Cocktail sort (optimized)", sort: OptimizedCocktailSort };
 }
