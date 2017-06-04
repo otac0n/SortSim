@@ -58,7 +58,6 @@ function MergeSort(values) {
 function BottomUpMergeSort(values) {
     var arrayA = values;
     var arrayB = SortArray.create(values.length);
-    debugger;
 
     for (var mergeSize = 2; mergeSize / 2 <= values.length; mergeSize *= 2) {
         var l = arrayA.pointer('left');
@@ -109,7 +108,109 @@ function BottomUpMergeSort(values) {
     }
 }
 
+function InPlaceMergeSort(values)
+{
+    var merge = function (l, u) {
+        var lPointer = values.pointer("l", l);
+        var uPointer = values.pointer("u", u);
+
+        if (uPointer.value - lPointer.value > 1) {
+            var m = lPointer.value + ((uPointer.value - lPointer.value) / 2 | 0);
+            var w = lPointer.value + uPointer.value - m;
+
+            wSort(lPointer.value, m, w);
+
+            var mPointer = values.pointer("m", m);
+            var wPointer = values.pointer("w", w);
+            var nPointer = values.pointer("n", w);
+
+            while (wPointer.value - lPointer.value > 2) {
+                nPointer.set(wPointer);
+                wPointer.set(lPointer.value + ((nPointer.value - lPointer.value + 1) / 2 | 0));
+                wSort(wPointer.value, nPointer.value, lPointer.value);
+                wMerge(lPointer.value, lPointer.value + nPointer.value - wPointer.value, nPointer.value, uPointer.value, wPointer.value);
+            }
+            for (nPointer.set(wPointer); nPointer.value > lPointer.value; nPointer.add(-1)) {
+                for (mPointer.set(nPointer); mPointer.value < uPointer.value; mPointer.add(1)) {
+                    if (values.compare(mPointer, mPointer.value - 1) >= 0) break;
+                    values.swap(mPointer, mPointer.value - 1);
+                }
+            }
+
+            mPointer.destroy();
+            wPointer.destroy();
+            nPointer.destroy();
+        }
+
+        lPointer.destroy();
+        uPointer.destroy();
+    };
+
+    var wSort = function (l, u, w) {
+        var lPointer = values.pointer("l", l);
+        var uPointer = values.pointer("u", u);
+        var wPointer = values.pointer("w", w);
+
+        if (uPointer.value - lPointer.value > 1) {
+            var m = lPointer.value + ((uPointer.value - lPointer.value) / 2 | 0);
+            merge(lPointer, m);
+            merge(m, uPointer);
+            wMerge(lPointer, m, m, uPointer, wPointer);
+        } else {
+            while (lPointer.value < uPointer.value) {
+                values.swap(lPointer, wPointer);
+                lPointer.add(1);
+                wPointer.add(1);
+            }
+        }
+
+        lPointer.destroy();
+        uPointer.destroy();
+        wPointer.destroy();
+    };
+
+    var wMerge = function (i, m, j, n, w) {
+        var iPointer = values.pointer("i", i);
+        var mPointer = values.pointer("m", m);
+        var jPointer = values.pointer("j", j);
+        var nPointer = values.pointer("n", n);
+        var wPointer = values.pointer("w", w);
+
+        while (iPointer.value < mPointer.value && jPointer.value < nPointer.value) {
+            if (values.compare(iPointer, jPointer) < 0) {
+                values.swap(wPointer, iPointer);
+                iPointer.add(1);
+            } else {
+                values.swap(wPointer, jPointer);
+                jPointer.add(1);
+            }
+            wPointer.add(1);
+        }
+
+        while (iPointer.value < mPointer.value) {
+            values.swap(wPointer, iPointer);
+            iPointer.add(1);
+            wPointer.add(1);
+        }
+
+        while (jPointer.value < nPointer.value) {
+            values.swap(wPointer, jPointer);
+            jPointer.add(1);
+            wPointer.add(1);
+        }
+
+        iPointer.destroy();
+        mPointer.destroy();
+        jPointer.destroy();
+        nPointer.destroy();
+        wPointer.destroy();
+    };
+
+    merge(0, values.length);
+}
+
 if (SortAlgorithms) {
     SortAlgorithms["MergeSort"] = { name: "Merge sort", sort: MergeSort };
     SortAlgorithms["BottomUpMergeSort"] = { name: "Merge sort (bottom-up)", sort: BottomUpMergeSort };
+    SortAlgorithms["InPlaceMergeSort"] = { name: "Merge sort (in-place)", sort: InPlaceMergeSort };
 }
