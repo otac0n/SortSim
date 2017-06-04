@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="renderers\Bar.css">
 </head>
 <body>
-    <select id="subjects"></select><br />
+    <select id="subjects"></select> <input id="count" value="100" /><br />
     <select id="algorithms1"></select>
     vs
     <select id="algorithms2"></select>
@@ -97,7 +97,7 @@
             }
 
             $('#go').click(function () {
-                var subject = Subjects[$('#subjects').val()](100);
+                var subject = Subjects[$('#subjects').val()](+$('#count').val());
 
                 var alg1 = $('#algorithms1').val();
                 var alg2 = $('#algorithms2').val();
