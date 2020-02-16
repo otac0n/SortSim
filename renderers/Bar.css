@@ -1,9 +1,16 @@
+.bar {
+}
+
 .bar div.array {
-    margin-right: 10px;
     display: inline-block;
+    margin: 5px 10px 20px 5px;
+    padding: 5px 5px 1px 5px;
+    border: 1px solid black;
+    background: #eee;
 }
 
 .bar div.element {
+    background: #fff;
     border: 1px solid black;
     display: inline-block;
     width: 10px;
@@ -11,14 +18,19 @@
     position: relative;
 }
 
-.bar i.pointer {
+.bar span.pointer {
     display: none;
 }
 
-.bar div.element i.pointer {
+.bar div.element span.pointer {
     display: inline-block;
     position: absolute;
-    bottom: -30px;
+    top: calc(100% + 5px);
+    left: -5px;
     background-color: #eee;
-    padding: 3px;
+    padding: 1px 1px 5px 2px;
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    border-bottom-left-radius: 10px;
+    border-left: 5px solid #ddd;
 }
