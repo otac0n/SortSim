@@ -26,11 +26,9 @@
     display: inline-block;
     position: absolute;
     top: calc(100% + 5px);
-    left: -5px;
+    left: 5px;
     background-color: #eee;
     padding: 1px 1px 5px 2px;
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
     border-bottom-left-radius: 10px;
     border-left: 5px solid #ddd;
 }
