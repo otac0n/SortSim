@@ -47,14 +47,26 @@ function RenderSimple(operations, sync, target) {
                 animations = 2;
                 break;
             case "array.swap":
-                var $a = $parent.find('.array' + op.idA).find('.element').eq(op.indexA).find('.value');
-                var $b = $parent.find('.array' + op.idB).find('.element').eq(op.indexB).find('.value');
-                var a = $b.text();
-                var b = $a.text();
+                var elements = op.elements;
+                var firstValue;
+                for (var i = 0; i < elements.length; i++) {
+                    var target = elements[i];
+                    var $target = $parent.find(".array" + target.id).find('.element').eq(target.index).find('.value');
+                    if (i == 0) {
+                        firstValue = $target.text();
+                    }
 
-                $a.text(a);
-                $b.text(b);
+                    var sourceValue;
+                    if (i < elements.length - 1) {
+                        var source = elements[i + 1];
+                        var $source = $parent.find(".array" + source.id).find('.element').eq(source.index).find('.value');
+                        sourceValue = $source.text();
+                    } else {
+                        sourceValue = firstValue;
+                    }
 
+                    $target.text(sourceValue);
+                }
                 break;
             case "pointer.create":
                 $('<i class="pointer" />').addClass('pointer' + op.id).text(op.name).appendTo($parent.find('.array' + op.array).find('.element').eq(op.value));

@@ -64,8 +64,18 @@ SortArray = (function () {
         return SortArray.compare(this, i, this, j);
     };
 
-    SortArray.prototype.swap = function swap(i, j) {
-        SortArray.swap(this, i, this, j);
+    SortArray.prototype.swap = function swap() {
+        if (arguments.length < 2) {
+            return;
+        }
+
+        var pairs = [];
+        for (var i = 0; i < arguments.length; i++) {
+            pairs.push(this);
+            pairs.push(arguments[i]);
+        }
+
+        SortArray.swap.apply(undefined, pairs);
     };
 
     SortArray.prototype.destroy = function destroy() {
@@ -97,14 +107,40 @@ SortArray = (function () {
              : 0;
     };
 
-    SortArray.swap = function (a, i, b, j) {
-        i = i instanceof ArrayPointer ? i.value : i;
-        j = j instanceof ArrayPointer ? j.value : j;
-        operations.push({ op: "array.swap", idA: a.id, indexA: i, idB: b.id, indexB: j });
+    SortArray.swap = function () {
+        if (arguments.length < 4 || arguments.length % 2 != 0) {
+            return;
+        }
 
-        var temp = a.storage[i];
-        a.storage[i] = b.storage[j];
-        b.storage[j] = temp;
+        var elements = [];
+        var arrays = [];
+        for (var i = 0; i < arguments.length; i += 2) {
+            var self = arguments[i];
+            var index = arguments[i + 1];
+            index = index instanceof ArrayPointer ? index.value : index;
+            arrays.push(self);
+            elements.push({ id: self.id, index: index });
+        }
+
+        operations.push({ op: "array.swap", elements: elements });
+
+        var firstValue;
+        for (var i = 0; i < elements.length; i++) {
+            var target = arrays[i];
+            if (i == 0) {
+                firstValue = target.storage[elements[i].index];
+            }
+
+            var sourceValue;
+            if (i < elements.length - 1) {
+                var source = arrays[i + 1];
+                sourceValue = source.storage[elements[i + 1].index];
+            } else {
+                sourceValue = firstValue;
+            }
+
+            target.storage[elements[i].index] = sourceValue;
+        }
     };
 
     return SortArray;

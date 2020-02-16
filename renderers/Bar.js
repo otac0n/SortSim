@@ -50,14 +50,26 @@ function RenderBar(operations, sync, target) {
                 animations = 2;
                 break;
             case "array.swap":
-                var $a = $parent.find(".array" + op.idA).find('.element').eq(op.indexA);
-                var $b = $parent.find(".array" + op.idB).find('.element').eq(op.indexB);
-                var a = $b.data('value');
-                var b = $a.data('value');
- 
-                $a.css({ height: getHeight(a) }).data('value', a);
-                $b.css({ height: getHeight(b) }).data('value', b);
+                var elements = op.elements;
+                var firstValue;
+                for (var i = 0; i < elements.length; i++) {
+                    var target = elements[i];
+                    var $target = $parent.find(".array" + target.id).find('.element').eq(target.index);
+                    if (i == 0) {
+                        firstValue = $target.data('value');
+                    }
 
+                    var sourceValue;
+                    if (i < elements.length - 1) {
+                        var source = elements[i + 1];
+                        var $source = $parent.find(".array" + source.id).find('.element').eq(source.index);
+                        sourceValue = $source.data('value');
+                    } else {
+                        sourceValue = firstValue;
+                    }
+
+                    $target.css({ height: getHeight(sourceValue) }).data('value', sourceValue);
+                }
                 break;
             case "pointer.create":
                 $('<span class="pointer" />').addClass('pointer' + op.id).text(op.name).appendTo($parent.find(".array" + op.array).find('.element').eq(op.value));
