@@ -35,15 +35,15 @@ function RenderBar(operations, sync, target) {
                 $parent.find(".array" + op.id).remove();
                 break;
             case "array.compare":
-                $parent.find(".array" + op.idA).find('.element').eq(op.indexA).css({ backgroundColor: '#fff' })
-                    .animate({ backgroundColor: '#ff0' }, 400/sync.speed, function () {
-                        $(this).animate({ backgroundColor: '#fff' }, 400/sync.speed, function () {
+                $parent.find(".array" + op.idA).find('.element').eq(op.indexA).css({ backgroundColor: '#C6FFBF' })
+                    .animate({ backgroundColor: '#FFFF93' }, 400/sync.speed, function () {
+                        $(this).animate({ backgroundColor: '#C6FFBF' }, 400/sync.speed, function () {
                             animationFinish();
                         });
                     });
-                $parent.find(".array" + op.idB).find('.element').eq(op.indexB).css({ backgroundColor: '#fff' })
-                    .animate({ backgroundColor: '#ff0' }, 400/sync.speed, function () {
-                        $(this).animate({ backgroundColor: '#fff' }, 400/sync.speed, function () {
+                $parent.find(".array" + op.idB).find('.element').eq(op.indexB).css({ backgroundColor: '#C6FFBF' })
+                    .animate({ backgroundColor: '#FFFF93' }, 400/sync.speed, function () {
+                        $(this).animate({ backgroundColor: '#C6FFBF' }, 400/sync.speed, function () {
                             animationFinish();
                         });
                     });

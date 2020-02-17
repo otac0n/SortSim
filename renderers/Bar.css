@@ -1,21 +1,27 @@
+body {
+    background-color: #F9FFFE;
+}
+
 .bar {
+    background-color: #F9FFFE;
 }
 
 .bar div.array {
+    background: #D1E0FF;
     display: inline-block;
-    margin: 5px 10px 20px 5px;
-    padding: 5px 5px 1px 5px;
+    margin: 5px 10px 5px 5px;
+    padding: 20px;
     border: 1px solid black;
-    background: #eee;
 }
 
 .bar div.element {
-    background: #fff;
+    background: #C6FFBF;
     border: 1px solid black;
     display: inline-block;
-    width: 10px;
+    width: 10px;	
     margin-right: 1px;
     position: relative;
+    box-shadow: 3px 3px 8px 0px #586491;
 }
 
 .bar span.pointer {
@@ -27,8 +33,13 @@
     position: absolute;
     top: calc(100% + 5px);
     left: 5px;
-    background-color: #eee;
-    padding: 1px 1px 5px 2px;
+    background-color: #F9FFFE;
+    color: #3A4B8E;
+    font-weight: bold;
+    padding: 1px 5px 5px 5px;
+    border: 1px solid #FFFC82;
+    border-left-width: 5px;
     border-bottom-left-radius: 10px;
-    border-left: 5px solid #ddd;
+    box-shadow: 5px 5px 10px 0px #586491;
+    z-index: 1;
 }
