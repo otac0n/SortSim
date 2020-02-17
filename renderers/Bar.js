@@ -77,6 +77,9 @@ function RenderBar(operations, sync, target) {
             case "pointer.set":
                 $parent.find(".pointer" + op.id).appendTo($parent.find(".pointer" + op.id).parents('.array').find('.element').eq(op.value));
                 break;
+            case "pointer.parent":
+                $parent.find(".pointer" + op.id).appendTo($parent.find(".array" + op.array).find('.element').eq(0));
+                break;
             case "pointer.destroy":
                 $parent.find(".pointer" + op.id).remove();
                 break;

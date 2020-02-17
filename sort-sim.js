@@ -22,7 +22,8 @@ ArrayPointer = (function () {
     ArrayPointer.prototype.set = function set(v) {
         if (v instanceof ArrayPointer) {
             if (this.array !== v.array) {
-                throw new Error("Attempt to access array with pointer from other array.");
+                this.array = v.array;
+                operations.push({ op: "pointer.parent", id: this.id, array: this.array.id });
             }
             this.value = v.value;
         } else {
