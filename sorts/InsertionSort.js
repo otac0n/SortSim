@@ -24,6 +24,39 @@ function InsertionSort(values) {
     last.destroy();
 }
 
+function BinarySort(values) {
+    var lo = values.pointer('lo');
+    var hi = values.pointer('hi');
+    var pivot = values.pointer('pivot');
+    var next = values.pointer('next').add(1);
+
+    for (; next.value < values.length; next.add(1)) {
+        lo.set(0);
+        hi.set(next);
+        do {
+          pivot.set(lo).add((hi.value - lo.value) >> 1);
+          if (values.compare(next, pivot) < 0) {
+              hi.set(pivot);
+          } else {
+              lo.set(pivot).add(1);
+          }
+        } while(lo.value < hi.value);
+
+        var indices = [];
+        for (var p = next.value; p >= lo.value; p--) {
+            indices.push(p);
+        }
+
+        values.swap.apply(values, indices);
+    }
+
+    lo.destroy();
+    hi.destroy();
+    pivot.destroy();
+    next.destroy();
+}
+
 if (SortAlgorithms) {
     SortAlgorithms["InsertionSort"] = { name: "Insertion sort", sort: InsertionSort };
+    SortAlgorithms["BinarySort"] = { name: "Binary sort", sort: BinarySort };
 }
