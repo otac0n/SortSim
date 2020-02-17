@@ -69,7 +69,7 @@ function BottomUpMergeSort(values) {
             r.set(i.value + mergeSize / 2);
             var lEnd = false;
             var rEnd = r.value >= arrayA.length;
-            for (j.set(i); j.value < i.value + mergeSize; j.add(1)) {
+            for (j.set(i.value); j.value < i.value + mergeSize; j.add(1)) {
                 if (!lEnd && !rEnd) {
                     if (arrayA.compare(l, r) <= 0) {
                         arrayB.set(j, arrayA.get(l));

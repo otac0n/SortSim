@@ -12,16 +12,25 @@ ArrayPointer = (function () {
     }
 
     ArrayPointer.prototype.add = function add(v) {
-        this.set(this.value + v);
+        return this.set(this.value + v);
     };
 
     ArrayPointer.prototype.sub = function add(v) {
-        this.set(this.value - v);
+        return this.set(this.value - v);
     };
 
     ArrayPointer.prototype.set = function set(v) {
-        this.value = v instanceof ArrayPointer ? v.value : v;
+        if (v instanceof ArrayPointer) {
+            if (this.array !== v.array) {
+                throw new Error("Attempt to access array with pointer from other array.");
+            }
+            this.value = v.value;
+        } else {
+            this.value = v;
+        }
+
         operations.push({ op: "pointer.set", id: this.id, value: this.value });
+        return this;
     };
 
     ArrayPointer.prototype.destroy = function destroy() {
@@ -49,13 +58,25 @@ SortArray = (function () {
         }
     }
 
+    function toIndex(self, i) {
+        if (i instanceof ArrayPointer) {
+            if (i.array !== self) {
+                throw new Error("Attempt to access array with pointer from other array.");
+            }
+
+            return i.value;
+        } else {
+            return i;
+        }
+    }
+
     SortArray.prototype.get = function get(i) {
-        i = i instanceof ArrayPointer ? i.value : i;
+        i = toIndex(this, i);
         return this.storage[i];
     };
 
     SortArray.prototype.set = function set(i, v) {
-        i = i instanceof ArrayPointer ? i.value : i;
+        i = toIndex(this, i);
         operations.push({ op: "array.set", id: this.id, index: i, value: v });
         this.storage[i] = v;
     };
@@ -98,8 +119,8 @@ SortArray = (function () {
     }
 
     SortArray.compare = function (a, i, b, j) {
-        i = i instanceof ArrayPointer ? i.value : i;
-        j = j instanceof ArrayPointer ? j.value : j;
+        i = toIndex(a, i);
+        j = toIndex(b, j);
         operations.push({ op: "array.compare", idA: a.id, indexA: i, idB: b.id, indexB: j });
 
         return a.storage[i] > b.storage[j] ? +1
