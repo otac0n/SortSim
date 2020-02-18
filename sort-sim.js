@@ -15,7 +15,7 @@ ArrayPointer = (function () {
         return this.set(this.value + v);
     };
 
-    ArrayPointer.prototype.sub = function add(v) {
+    ArrayPointer.prototype.sub = function sub(v) {
         return this.set(this.value - v);
     };
 
@@ -46,7 +46,7 @@ ArrayPointer = (function () {
         operations.push({ op: "pointer.destroy", id: this.id });
     };
 
-    ArrayPointer.assignAndIncrement = function assign(a, b) {
+    ArrayPointer.assignAndIncrement = function assignAndIncrement(a, b) {
         a.assign(b);
         a.add(1);
         b.add(1);
@@ -67,7 +67,8 @@ SortArray = (function () {
         } else {
             operations.push({ op: "array.create", id: this.id, length: length });
             this.storage = [];
-            for (var i = 0; i < this.storage.length; i++) {
+            this.storage.length = length;
+            for (var i = 0; i < length; i++) {
                 this.storage[i] = null;
             }
         }
@@ -126,7 +127,7 @@ SortArray = (function () {
         return new ArrayPointer(name, value instanceof ArrayPointer ? value.value : (value || 0), this);
     }
 
-    SortArray.create = function (lengthOrArray) {
+    SortArray.create = function create(lengthOrArray) {
         if (lengthOrArray instanceof Array) {
             return new SortArray(lengthOrArray.length, lengthOrArray);
         } else {
@@ -134,7 +135,7 @@ SortArray = (function () {
         }
     }
 
-    SortArray.compare = function (a, i, b, j) {
+    SortArray.compare = function compare(a, i, b, j) {
         i = toIndex(a, i);
         j = toIndex(b, j);
         operations.push({ op: "array.compare", idA: a.id, indexA: i, idB: b.id, indexB: j });
@@ -144,7 +145,7 @@ SortArray = (function () {
              : 0;
     };
 
-    SortArray.swap = function () {
+    SortArray.swap = function swap() {
         if (arguments.length < 4 || arguments.length % 2 != 0) {
             return;
         }
