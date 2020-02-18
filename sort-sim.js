@@ -34,8 +34,22 @@ ArrayPointer = (function () {
         return this;
     };
 
+    ArrayPointer.prototype.assign = function assign(v) {
+        this.array.set(this, v);
+    };
+
+    ArrayPointer.prototype.clone = function clone(name) {
+        return new ArrayPointer(name, this.value, this.array);
+    };
+
     ArrayPointer.prototype.destroy = function destroy() {
         operations.push({ op: "pointer.destroy", id: this.id });
+    };
+
+    ArrayPointer.assignAndIncrement = function assign(a, b) {
+        a.assign(b);
+        a.add(1);
+        b.add(1);
     };
 
     return ArrayPointer;
@@ -78,6 +92,7 @@ SortArray = (function () {
 
     SortArray.prototype.set = function set(i, v) {
         i = toIndex(this, i);
+        v = v instanceof ArrayPointer ? v.array.get(v.value) : v;
         operations.push({ op: "array.set", id: this.id, index: i, value: v });
         this.storage[i] = v;
     };

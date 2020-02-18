@@ -25,10 +25,10 @@ function InsertionSort(values) {
 }
 
 function BinarySort(values) {
-    var lo = values.pointer('lo');
-    var hi = values.pointer('hi');
-    var pivot = values.pointer('pivot');
-    var next = values.pointer('next').add(1);
+    var lo = values.pointer("lo", 0);
+    var hi = values.pointer("hi");
+    var pivot = values.pointer("pivot");
+    var next = values.pointer("next", 1);
 
     for (; next.value < values.length; next.add(1)) {
         lo.set(0);

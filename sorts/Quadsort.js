@@ -1,6 +1,6 @@
 function Quadsort(values) {
     var quadswap = function (array) {
-        var offset = array.pointer('offset');
+        var offset = array.pointer("offset");
 
         for (offset.set(0); offset.value + 4 <= array.length; offset.add(4)) {
             if (array.compare(offset, offset.value + 1) > 0) {
@@ -61,12 +61,12 @@ function Quadsort(values) {
     var quadsort = function (array, swap) {
         var offset;
         var block = 4;
-        var pta = array.pointer('a');
-        var pts = swap.pointer('s');
-        var c = array.pointer('c');
-        var c_max = array.pointer('c_max');
-        var d = array.pointer('d');
-        var d_max = array.pointer('d_max');
+        var pta = array.pointer("a");
+        var pts = swap.pointer("s");
+        var c = array.pointer("c");
+        var c_max = array.pointer("c_max");
+        var d = array.pointer("d");
+        var d_max = array.pointer("d_max");
 
         var end = array.length;
 
@@ -99,15 +99,11 @@ function Quadsort(values) {
                             offset + block * 4 <= array.length ? d_max.set(d).add(block * 2) : d_max.set(end);
 
                             while (c.value < c_max.value) {
-                                swap.set(pts, array.get(c));
-                                pts.add(1);
-                                c.add(1);
+                                ArrayPointer.assignAndIncrement(pts, c);
                             }
 
                             while (d.value < d_max.value) {
-                                swap.set(pts, array.get(d));
-                                pts.add(1);
-                                d.add(1);
+                                ArrayPointer.assignAndIncrement(pts, d);
                             }
 
                             gotoStep3 = true;
@@ -120,9 +116,7 @@ function Quadsort(values) {
                             c_max.set(pta).add(block * 2);
 
                             while (c.value < c_max.value) {
-                                swap.set(pts, array.get(c));
-                                pts.add(1);
-                                c.add(1);
+                                ArrayPointer.assignAndIncrement(pts, c);
                             }
 
                             gotoStep2 = true;
@@ -142,9 +136,7 @@ function Quadsort(values) {
                         c_max.set(pta).add(block * 2);
 
                         while (c.value < c_max.value) {
-                            swap.set(pts, array.get(c));
-                            pts.add(1);
-                            c.add(1);
+                            ArrayPointer.assignAndIncrement(pts, c);
                         }
 
                         gotoStep2 = true;
@@ -171,52 +163,36 @@ function Quadsort(values) {
                         while (c.value < c_max.value)
                         {
                             while (array.compare(c, d) > 0) {
-                                swap.set(pts, array.get(d));
-                                pts.add(1);
-                                d.add(1);
+                                ArrayPointer.assignAndIncrement(pts, d);
                             }
 
-                            swap.set(pts, array.get(c));
-                            pts.add(1);
-                            c.add(1);
+                            ArrayPointer.assignAndIncrement(pts, c);
                         }
                         while (d.value < d_max.value) {
-                            swap.set(pts, array.get(d));
-                            pts.add(1);
-                            d.add(1);
+                            ArrayPointer.assignAndIncrement(pts, d);
                         }
                     }
                     else if (array.compare(c, d_max.value - 1) > 0) {
                         while (d.value < d_max.value) {
-                            swap.set(pts, array.get(d));
-                            pts.add(1);
-                            d.add(1);
+                            ArrayPointer.assignAndIncrement(pts, d);
                         }
 
                         while (c.value < c_max.value) {
-                            swap.set(pts, array.get(c));
-                            pts.add(1);
-                            c.add(1);
+                            ArrayPointer.assignAndIncrement(pts, c);
                         }
                     }
                     else {
                         while (d.value < d_max.value)
                         {
                             while (array.compare(c, d) <= 0) {
-                                swap.set(pts, array.get(c));
-                                pts.add(1);
-                                c.add(1);
+                                ArrayPointer.assignAndIncrement(pts, c);
                             }
 
-                            swap.set(pts, array.get(d));
-                            pts.add(1);
-                            d.add(1);
+                            ArrayPointer.assignAndIncrement(pts, d);
                         }
 
                         while (c.value < c_max.value) {
-                            swap.set(pts, array.get(c));
-                            pts.add(1);
-                            c.add(1);
+                            ArrayPointer.assignAndIncrement(pts, c);
                         }
                     }
                 }
@@ -235,52 +211,36 @@ function Quadsort(values) {
                             if (array.compare(c_max.value - 1, d_max.value - 1) <= 0) {
                                 while (c.value < c_max.value) {
                                     while (array.compare(c, d) > 0) {
-                                        swap.set(pts, array.get(d));
-                                        pts.add(1);
-                                        d.add(1);
+                                        ArrayPointer.assignAndIncrement(pts, d);
                                     }
 
-                                    swap.set(pts, array.get(c));
-                                    pts.add(1);
-                                    c.add(1);
+                                    ArrayPointer.assignAndIncrement(pts, c);
                                 }
 
                                 while (d.value < d_max.value) {
-                                    swap.set(pts, array.get(d));
-                                    pts.add(1);
-                                    d.add(1);
+                                    ArrayPointer.assignAndIncrement(pts, d);
                                 }
                             }
                             else if (array.compare(c, d_max.value - 1) > 0) {
                                 while (d.value < d_max.value) {
-                                    swap.set(pts, array.get(d));
-                                    pts.add(1);
-                                    d.add(1);
+                                    ArrayPointer.assignAndIncrement(pts, d);
                                 }
 
                                 while (c.value < c_max.value) {
-                                    swap.set(pts, array.get(c));
-                                    pts.add(1);
-                                    c.add(1);
+                                    ArrayPointer.assignAndIncrement(pts, c);
                                 }
                             }
                             else {
                                 while (d.value < d_max.value) {
                                     while (array.compare(c, d) <= 0) {
-                                        swap.set(pts, array.get(c));
-                                        pts.add(1);
-                                        c.add(1);
+                                        ArrayPointer.assignAndIncrement(pts, c);
                                     }
 
-                                    swap.set(pts, array.get(d));
-                                    pts.add(1);
-                                    d.add(1);
+                                    ArrayPointer.assignAndIncrement(pts, d);
                                 }
 
                                 while (c.value < c_max.value) {
-                                    swap.set(pts, array.get(c));
-                                    pts.add(1);
-                                    c.add(1);
+                                    ArrayPointer.assignAndIncrement(pts, c);
                                 }
                             }
                         }
@@ -320,33 +280,23 @@ function Quadsort(values) {
                     if (SortArray.compare(swap, c_max.value - 1, d_max.array, d_max.value - 1) <= 0) {
                         while (c.value < c_max.value) {
                             while (SortArray.compare(swap, c, d.array, d) > 0) {
-                                array.set(pta, d.array.get(d));
-                                pta.add(1);
-                                d.add(1);
+                                ArrayPointer.assignAndIncrement(pta, d);
                             }
 
-                            array.set(pta, swap.get(c));
-                            pta.add(1);
-                            c.add(1);
+                            ArrayPointer.assignAndIncrement(pta, c);
                         }
 
                         while (d.value < d_max.value) {
-                            array.set(pta, d.array.get(d));
-                            pta.add(1);
-                            d.add(1);
+                            ArrayPointer.assignAndIncrement(pta, d);
                         }
                     }
                     else if (SortArray.compare(swap, c, d_max.array, d_max.value - 1) > 0) {
                         while (d.value < d_max.value) {
-                            array.set(pta, d.array.get(d));
-                            pta.add(1);
-                            d.add(1);
+                            ArrayPointer.assignAndIncrement(pta, d);
                         }
 
                         while (c.value < c_max.value) {
-                            array.set(pta, swap.get(c));
-                            pta.add(1);
-                            c.add(1);
+                            ArrayPointer.assignAndIncrement(pta, c);
                         }
                     }
                     else
@@ -354,9 +304,7 @@ function Quadsort(values) {
                         while (d.value < d_max.value)
                         {
                             while (SortArray.compare(d.array, d, swap, c) > 0) {
-                                array.set(pta, swap.get(c));
-                                pta.add(1);
-                                c.add(1);
+                                ArrayPointer.assignAndIncrement(pta, c);
                             }
 
                             array.set(pta, d.array.get(d));
@@ -365,9 +313,7 @@ function Quadsort(values) {
                         }
 
                         while (c.value < c_max.value) {
-                            array.set(pta, swap.get(c));
-                            pta.add(1);
-                            c.add(1);
+                            ArrayPointer.assignAndIncrement(pta, c);
                         }
                     }
                 }
@@ -376,9 +322,7 @@ function Quadsort(values) {
                     d_max.set(pts).add(array.length - offset);
 
                     while (c.value < d_max.value) {
-                        array.set(pta, swap.get(c));
-                        pta.add(1);
-                        c.add(1);
+                        ArrayPointer.assignAndIncrement(pta, c);
                     }
                 }
                 offset += block * 4;

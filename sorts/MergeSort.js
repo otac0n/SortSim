@@ -7,22 +7,14 @@ function MergeSort(values) {
         while (l.value < left.length || r.value < right.length) {
             if (l.value < left.length && r.value < right.length) {
                 if (SortArray.compare(left, l, right, r) <= 0) {
-                    result.set(o, left.get(l));
-                    o.add(1);
-                    l.add(1);
+                    ArrayPointer.assignAndIncrement(o, l);
                 } else {
-                    result.set(o, right.get(r));
-                    o.add(1);
-                    r.add(1);
+                    ArrayPointer.assignAndIncrement(o, r);
                 }
             } else if (l.value < left.length) {
-                result.set(o, left.get(l));
-                o.add(1);
-                l.add(1);
+                ArrayPointer.assignAndIncrement(o, l);
             } else if (r.value < right.length) {
-                result.set(o, right.get(r));
-                o.add(1);
-                r.add(1);
+                ArrayPointer.assignAndIncrement(o, r);
             }
         }
 
@@ -60,10 +52,10 @@ function BottomUpMergeSort(values) {
     var arrayB = SortArray.create(values.length);
 
     for (var mergeSize = 2; mergeSize / 2 <= values.length; mergeSize *= 2) {
-        var l = arrayA.pointer('left');
-        var r = arrayA.pointer('right');
-        var i = arrayA.pointer('i');
-        var j = arrayB.pointer('j');
+        var l = arrayA.pointer("left");
+        var r = arrayA.pointer("right");
+        var i = arrayA.pointer("i");
+        var j = arrayB.pointer("j");
         for (i.set(0); i.value < arrayA.length; i.add(mergeSize)) {
             l.set(i);
             r.set(i.value + mergeSize / 2);
@@ -72,19 +64,19 @@ function BottomUpMergeSort(values) {
             for (j.set(i.value); j.value < i.value + mergeSize; j.add(1)) {
                 if (!lEnd && !rEnd) {
                     if (arrayA.compare(l, r) <= 0) {
-                        arrayB.set(j, arrayA.get(l));
+                        j.assign(l);
                         l.add(1);
                         lEnd = l.value > i.value + mergeSize / 2 - 1;
                     } else {
-                        arrayB.set(j, arrayA.get(r));
+                        j.assign(r);
                         r.add(1);
                         rEnd = r.value > i.value + mergeSize - 1 || r.value >= arrayA.length;
                     }
                 } else if (lEnd) {
-                    arrayB.set(j, arrayA.get(r));
+                    j.assign(r);
                     r.add(1);
                 } else {
-                    arrayB.set(j, arrayA.get(l));
+                    j.assign(l);
                     l.add(1);
                 }
             }
@@ -130,7 +122,7 @@ function InPlaceMergeSort(values)
                 wSort(wPointer.value, nPointer.value, lPointer.value);
                 wMerge(lPointer.value, lPointer.value + nPointer.value - wPointer.value, nPointer.value, uPointer.value, wPointer.value);
             }
-            for (nPointer.set(wPointer); nPointer.value > lPointer.value; nPointer.add(-1)) {
+            for (nPointer.set(wPointer); nPointer.value > lPointer.value; nPointer.sub(1)) {
                 for (mPointer.set(nPointer); mPointer.value < uPointer.value; mPointer.add(1)) {
                     if (values.compare(mPointer, mPointer.value - 1) >= 0) break;
                     values.swap(mPointer, mPointer.value - 1);

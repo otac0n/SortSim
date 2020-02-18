@@ -26,7 +26,7 @@ function DoubleSelectionSort(values) {
     var r = values.pointer("right");
     var min = values.pointer("min");
     var max = values.pointer("max");
-    for (l.set(0), r.set(values.length - 1); l.value < Math.floor(values.length / 2); l.add(1), r.add(-1)) {
+    for (l.set(0), r.set(values.length - 1); l.value < Math.floor(values.length / 2); l.add(1), r.sub(1)) {
         min.set(l);
         max.set(l);
 
