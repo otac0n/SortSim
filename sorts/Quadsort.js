@@ -338,8 +338,8 @@ function Quadsort(values) {
         d_max.destroy();
     };
 
-    var swap = SortArray.create(values.length);
     quadswap(values);
+    var swap = SortArray.create(values.length);
     quadsort(values, swap);
     swap.destroy();
 }
