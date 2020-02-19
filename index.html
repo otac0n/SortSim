@@ -8,7 +8,7 @@
   </head>
   <body>
     <table>
-      <tr><td><label for="subjects">Subject</label></td><td><select id="subjects"></select></td><td><label for="count">Count</label></td><td><input id="count" value="50" /></td></tr>
+      <tr><td><label for="subjects">Subject</label></td><td><select id="subjects"></select></td><td><label for="count">Count</label></td><td><input id="count" value="64" /></td></tr>
       <tr><td><label>Algorithms</label></td><td colspan="3"><select id="algorithms1"></select> vs <select id="algorithms2"></select></td></tr>
       <tr><td><label for="speed">Speed</label></td><td><input id="speed" type="range" min="1" max="100" value="6"></td><td></td><td><button id="go" type="button">Go</button></td></tr>
     </table>
@@ -125,7 +125,7 @@
                 subject[i] = i + 1;
             }
 
-            for (var i = 0; i < Math.log(len); i++) {
+            for (var n = 0; n < Math.log(len); n++) {
                 var x = Math.random() * len | 0;
                 var y = Math.random() * (len - 1) | 0;
                 if (y >=x ) {
@@ -173,6 +173,11 @@
                 $('<option />').attr('value', alg).text(SortAlgorithms[alg].name).appendTo('#algorithms1');
                 $('<option />').attr('value', alg).text(SortAlgorithms[alg].name).appendTo('#algorithms2');
             }
+
+            var options1 = $("#algorithms1").find("option");
+            $(options1[Math.random() * options1.length | 0]).attr("selected", true);
+            var options2 = $("#algorithms2").find("option");
+            $(options2[Math.random() * options2.length | 0]).attr("selected", true);
 
             for (var sub in Subjects) {
                 $('<option />').attr('value', sub).text(sub).appendTo('#subjects');
