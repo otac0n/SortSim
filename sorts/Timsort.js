@@ -53,7 +53,7 @@ function Timsort(values) {
 
         var i = lo.clone("i").add(1);
         var n = 2
-        var descending = lo.array.compare(i, i.value - 1) < 0;
+        var descending = i.array.compare(i, i.value - 1) < 0;
 
         for (i.add(1); i.value < hi.value; i.add(1), n++) {
             if (i.array.compare(i, i.value - 1) < 0 ? !descending : descending) {
@@ -191,13 +191,13 @@ function Timsort(values) {
 
         var pa_na = pa.clone("pa").add(na - 1);
         nb = gallop_left(pa_na, pb, nb, nb - 1);
+        pa_na.destroy();
 
         na <= nb
           ? merge_lo(ms, pa, na, pb, nb)
           : merge_hi(ms, pa, na, pb, nb);
 
         pa.destroy();
-        pa_na.destroy();
         pb.destroy();
     };
 
@@ -232,8 +232,7 @@ function Timsort(values) {
                 var bcount = 0;
 
                 while (true) {
-                    var k = SortArray.compare(pb.array, pb, pa.array, pa) < 0 ? 1 : 0;
-                    if (k) {
+                    if (SortArray.compare(pb.array, pb, pa.array, pa) < 0) {
                         ArrayPointer.assignAndDecrement(dest, pa);
                         acount++;
                         bcount = 0;
@@ -261,56 +260,62 @@ function Timsort(values) {
                     }
                 }
 
-                if (!(gotoSucceed || gotoCopyA)) {
-                    min_gallop++;
-                    do {
-                        min_gallop -= (min_gallop > 1 ? 1 : 0);
-                        ms.min_gallop = min_gallop;
-                        var k = gallop_right(pb, basea, na, na - 1);
-                        k = na - k;
-                        acount = k;
-                        if (k) {
-                            memmove(dest, pa, k);
-                            dest.sub(k);
-                            pa.sub(k);
-                            na -= k;
-                            if (na == 0) {
-                                gotoSucceed = true;
-                                break;
-                            }
-                        }
-                        ArrayPointer.assignAndDecrement(dest, pb);
-                        nb--;
-                        if (nb == 1) {
-                            gotoCopyA = true;
-                            break;
-                        }
+                if (gotoSucceed || gotoCopyA) {
+                    break;
+                }
 
-                        k = gallop_left(pa, baseb, nb, nb - 1);
-                        k = nb - k;
-                        bcount = k;
-                        if (k) {
-                            SortArray.memcpy(dest, pb, k);
-                            dest.sub(k);
-                            pb.sub(k);
-                            nb -= k;
-                            if (nb == 1) {
-                                gotoCopyA = true;
-                                break;
-                            }
-                            if (nb == 0) {
-                                gotoSucceed = true;
-                                break;
-                            }
-                        }
-                        ArrayPointer.assignAndDecrement(dest, pa);
-                        na--;
+                min_gallop++;
+                do {
+                    min_gallop -= (min_gallop > 1 ? 1 : 0);
+                    ms.min_gallop = min_gallop;
+                    var k = gallop_right(pb, basea, na, na - 1);
+                    k = na - k;
+                    acount = k;
+                    if (k) {
+                        dest.sub(k - 1);
+                        pa.sub(k - 1);
+                        memmove(dest, pa, k);
+                        dest.sub(1);
+                        pa.sub(1);
+                        na -= k;
                         if (na == 0) {
                             gotoSucceed = true;
                             break;
                         }
-                    } while (acount >= MIN_GALLOP || bcount >= MIN_GALLOP);
-                }
+                    }
+                    ArrayPointer.assignAndDecrement(dest, pb);
+                    nb--;
+                    if (nb == 1) {
+                        gotoCopyA = true;
+                        break;
+                    }
+
+                    k = gallop_left(pa, baseb, nb, nb - 1);
+                    k = nb - k;
+                    bcount = k;
+                    if (k) {
+                        dest.sub(k - 1);
+                        pb.sub(k - 1);
+                        SortArray.memcpy(dest, pb, k);
+                        dest.sub(1);
+                        pb.sub(1);
+                        nb -= k;
+                        if (nb == 1) {
+                            gotoCopyA = true;
+                            break;
+                        }
+                        if (nb == 0) {
+                            gotoSucceed = true;
+                            break;
+                        }
+                    }
+                    ArrayPointer.assignAndDecrement(dest, pa);
+                    na--;
+                    if (na == 0) {
+                        gotoSucceed = true;
+                        break;
+                    }
+                } while (acount >= MIN_GALLOP || bcount >= MIN_GALLOP);
 
                 if (gotoSucceed || gotoCopyA) {
                     break;
@@ -369,8 +374,7 @@ function Timsort(values) {
                 var bcount = 0;
 
                 while (true) {
-                    var k = SortArray.compare(pb.array, pb, pa.array, pa) < 0 ? 1 : 0;
-                    if (k) {
+                    if (SortArray.compare(pb.array, pb, pa.array, pa) < 0) {
                         ArrayPointer.assignAndIncrement(dest, pb);
                         bcount++;
                         acount = 0;
@@ -398,54 +402,56 @@ function Timsort(values) {
                     }
                 }
 
-                if (!(gotoSucceed || gotoCopyB)) {
-                    min_gallop++;
-                    do {
-                        min_gallop -= (min_gallop > 1 ? 1 : 0);
-                        ms.min_gallop = min_gallop;
-                        var k = gallop_right(pb, pa, na, 0);
-                        acount = k;
-                        if (k) {
-                            SortArray.memcpy(dest, pa, k);
-                            dest.add(k);
-                            pa.add(k);
-                            na -= k;
-                            if (na == 1) {
-                                gotoCopyB = true;
-                                break;
-                            }
-                            if (na == 0) {
-                                gotoSucceed = true;
-                                break;
-                            }
-                        }
-                        ArrayPointer.assignAndIncrement(dest, pb);
-                        nb--;
-                        if (nb == 0) {
-                            gotoSucceed = true;
-                            break;
-                        }
+                if (gotoSucceed || gotoCopyB) {
+                    break;
+                }
 
-                        k = gallop_left(pa, pb, nb, 0);
-                        bcount = k;
-                        if (k) {
-                            memmove(dest, pb, k);
-                            dest.add(k);
-                            pb.add(k);
-                            nb -= k;
-                            if (nb == 0) {
-                                gotoSucceed = true;
-                                break;
-                            }
-                        }
-                        ArrayPointer.assignAndIncrement(dest, pa);
-                        na--;
+                min_gallop++;
+                do {
+                    min_gallop -= (min_gallop > 1 ? 1 : 0);
+                    ms.min_gallop = min_gallop;
+                    var k = gallop_right(pb, pa, na, 0);
+                    acount = k;
+                    if (k) {
+                        SortArray.memcpy(dest, pa, k);
+                        dest.add(k);
+                        pa.add(k);
+                        na -= k;
                         if (na == 1) {
                             gotoCopyB = true;
                             break;
                         }
-                    } while (acount >= MIN_GALLOP || bcount >= MIN_GALLOP);
-                }
+                        if (na == 0) {
+                            gotoSucceed = true;
+                            break;
+                        }
+                    }
+                    ArrayPointer.assignAndIncrement(dest, pb);
+                    nb--;
+                    if (nb == 0) {
+                        gotoSucceed = true;
+                        break;
+                    }
+
+                    k = gallop_left(pa, pb, nb, 0);
+                    bcount = k;
+                    if (k) {
+                        memmove(dest, pb, k);
+                        dest.add(k);
+                        pb.add(k);
+                        nb -= k;
+                        if (nb == 0) {
+                            gotoSucceed = true;
+                            break;
+                        }
+                    }
+                    ArrayPointer.assignAndIncrement(dest, pa);
+                    na--;
+                    if (na == 1) {
+                        gotoCopyB = true;
+                        break;
+                    }
+                } while (acount >= MIN_GALLOP || bcount >= MIN_GALLOP);
 
                 if (gotoSucceed || gotoCopyB) {
                     break;
