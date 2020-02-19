@@ -118,6 +118,56 @@
             return subject;
         };
 
+        Subjects["Mixed"] = function (len) {
+            var subject = [];
+            subject.length = len;
+            for (var i = 0; i < len; i++) {
+                subject[i] = i + 1;
+            }
+
+            for (var i = 0; i < Math.log(len); i++) {
+                var x = Math.random() * len | 0;
+                var y = Math.random() * (len - 1) | 0;
+                if (y >=x ) {
+                    y++;
+                } else {
+                    var a = x;
+                    x = y;
+                    y = a;
+                }
+
+                switch (Math.random() * 3 | 0) {
+                    case 0: // Reverse
+                        var l = (y - x) / 2 | 0;
+                        for (var i = 0; i < l; i++) {
+                            var a = subject[i];
+                            subject[i] = subject[len - i - 1];
+                            subject[len - i - 1] = a;
+                        }
+                        break;
+                    case 1: // Rotate
+                        var l = (y - x);
+                        var z = (Math.random() * l | 0) + 1;
+                        var stuff = subject.splice(x + (l - z), z);
+                        stuff.unshift(0);
+                        stuff.unshift(x);
+                        Array.prototype.splice.apply(subject, stuff);
+                        break;
+                    case 2: // Shuffle
+                        for (var a = y; a > x; a--) {
+                            var b = (Math.random() * (a - x) | 0) + x;
+
+                            var temp = subject[a];
+                            subject[a] = subject[b];
+                            subject[b] = temp;
+                        }
+                        break;
+                }
+            }
+
+            return subject;
+        };
+
         $(function () {
             for (var alg in SortAlgorithms) {
                 $('<option />').attr('value', alg).text(SortAlgorithms[alg].name).appendTo('#algorithms1');
