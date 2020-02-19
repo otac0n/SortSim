@@ -58,6 +58,15 @@
             return subject;
         };
 
+        Subjects["Sorted"] = function (len) {
+            var subject = [];
+            subject.length = len;
+            for (var i = 0; i < len; i++) {
+                subject[i] = i + 1;
+            }
+            return subject;
+        };
+
         Subjects["Reversed"] = function (len) {
             var subject = [];
             subject.length = len;
@@ -67,11 +76,32 @@
             return subject;
         };
 
-        Subjects["Nearly sorted"] = function (len) {
+        Subjects["Mostly ascending"] = function (len) {
             var subject = [];
             subject.length = len;
             for (var i = 0; i < len; i++) {
                 subject[i] = i + 1;
+            }
+
+            for (var i = 0; i < len * 2; i++) {
+                var a = Math.random() * len | 0;
+                var b = Math.random() * 3 | 0 - 1 + a;
+
+                if (b >= len || b < 0) continue;
+
+                var temp = subject[a];
+                subject[a] = subject[b];
+                subject[b] = temp;
+            }
+
+            return subject;
+        };
+
+        Subjects["Mostly descending"] = function (len) {
+            var subject = [];
+            subject.length = len;
+            for (var i = 0; i < len; i++) {
+                subject[i] = len - i;
             }
 
             for (var i = 0; i < len * 2; i++) {
