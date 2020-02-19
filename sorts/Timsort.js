@@ -290,7 +290,7 @@ function Timsort(values) {
                         k = nb - k;
                         bcount = k;
                         if (k) {
-                            memcpy(dest, pb, k);
+                            SortArray.memcpy(dest, pb, k);
                             dest.sub(k);
                             pb.sub(k);
                             nb -= k;
