@@ -52,6 +52,12 @@ ArrayPointer = (function () {
         b.add(1);
     };
 
+    ArrayPointer.assignAndDecrement = function assignAndDecrement(a, b) {
+        a.assign(b);
+        a.sub(1);
+        b.sub(1);
+    };
+
     return ArrayPointer;
 })();
 
@@ -179,6 +185,16 @@ SortArray = (function () {
 
             target.storage[elements[i].index] = sourceValue;
         }
+    };
+
+    SortArray.memcpy = function memcpy(dst, src, num) {
+        dst = dst instanceof SortArray ? dst.pointer("dst") : dst.clone("dst");
+        src = src instanceof SortArray ? src.pointer("src") : src.clone("src");
+        for (; num > 0; num--) {
+            ArrayPointer.assignAndIncrement(dst, src);
+        }
+        src.destroy();
+        dst.destroy();
     };
 
     return SortArray;
