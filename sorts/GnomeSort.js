@@ -1,4 +1,4 @@
-function GnomeSort(values) {
+function randomEmoji() {
     var emojis = [
         // Robot Face
         //"\uD83E\uDD16",
@@ -23,8 +23,11 @@ function GnomeSort(values) {
         "\uD83E\uDDDD\uD83C\uDFFE",
         "\uD83E\uDDDD\uD83C\uDFFF",
     ];
+    return emojis[Math.random() * emojis.length | 0];
+}
 
-    var i = values.pointer(emojis[Math.random() * emojis.length | 0], 1);
+function GnomeSort(values) {
+    var i = values.pointer(randomEmoji(), 1);
     while (i.value < values.length) {
         if (values.compare(i, i.value - 1) >= 0) {
             i.add(1);
